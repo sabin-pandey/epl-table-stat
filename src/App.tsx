@@ -3,13 +3,13 @@ import "./App.css";
 
 type GameStatType = {
   name: string;
-  gamesPlayed: number;
-  gamesWon: number;
-  gamesDrawn: number;
-  gamesLost: number;
-  goalsScored: number;
-  goalsConceded: number;
-  goalDifference: number;
+  gamesPlayed?: number;
+  gamesWon?: number;
+  gamesDrawn?: number;
+  gamesLost?: number;
+  goalsScored?: number;
+  goalsConceded?: number;
+  goalDifference?: number;
   points?: number;
 };
 
@@ -68,10 +68,9 @@ function App() {
 
         if (score !== undefined) {
           acc[team1].gamesPlayed = gamesPlayedTeam1 + 1;
-          acc[team2].gamesPlayed = gamesPlayedTeam2 + 1;
-        }
 
-        if (ft !== undefined) {
+          acc[team2].gamesPlayed = gamesPlayedTeam2 + 1;
+
           const goalDifference = team1Score - team2Score;
 
           if (goalDifference === 0) {
@@ -112,7 +111,7 @@ function App() {
         return acc;
       }, {});
 
-      console.log(stat);
+      setGamesStat(stat);
     }
 
     const url =
@@ -129,7 +128,69 @@ function App() {
       });
   }, []);
 
-  return <></>;
+  if (gamesStat === undefined) {
+    return <div>Loading please wait.</div>;
+  }
+
+  if (gamesStat === null) {
+    return <div>No data.</div>;
+  }
+
+  function sortByPoints(team1: GameStatType, team2: GameStatType) {
+    return (team2.points ?? 0) - (team1.points ?? 0);
+  }
+
+  return (
+    <table>
+      <thead>
+        <tr>
+          <td>Position</td>
+          <td>Club</td>
+          <td>Played</td>
+          <td>Won</td>
+          <td>Drawn</td>
+          <td>Lost</td>
+          <td>GF</td>
+          <td>GA</td>
+          <td>GD</td>
+          <td>Points</td>
+          <td>Forum</td>
+        </tr>
+      </thead>
+      <tbody>
+        {Object.keys(gamesStat)
+          .sort((club1, club2) =>
+            sortByPoints(gamesStat[club1], gamesStat[club2])
+          )
+          .map((clubName, index) => {
+            const {
+              gamesDrawn = 0,
+              gamesLost = 0,
+              gamesPlayed = 0,
+              gamesWon = 0,
+              goalDifference = 0,
+              goalsConceded = 0,
+              goalsScored = 0,
+              points,
+            } = gamesStat[clubName];
+            return (
+              <tr key={clubName}>
+                <td>{index + 1}</td>
+                <td>{clubName}</td>
+                <td>{gamesPlayed}</td>
+                <td>{gamesWon}</td>
+                <td>{gamesDrawn}</td>
+                <td>{gamesLost}</td>
+                <td>{goalsScored}</td>
+                <td>{goalsConceded}</td>
+                <td>{goalDifference}</td>
+                <td>{points}</td>
+              </tr>
+            );
+          })}
+      </tbody>
+    </table>
+  );
 }
 
 export default App;
