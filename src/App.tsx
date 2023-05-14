@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "./App.css";
 
 type GameStatType = {
   name: string;
@@ -45,25 +44,25 @@ function App() {
         acc[team2] = acc[team2] ?? {};
 
         const {
-          gamesDrawn: gamesDrawnTeam1 = 0,
-          gamesLost: gamesLostTeam1 = 0,
-          gamesPlayed: gamesPlayedTeam1 = 0,
-          gamesWon: gamesWonTeam1 = 0,
-          goalDifference: goalDifferenceTeam1 = 0,
-          goalsConceded: goalsConcededTeam1 = 0,
-          goalsScored: goalsScoredTeam1 = 0,
           points: pointsTeam1 = 0,
+          gamesWon: gamesWonTeam1 = 0,
+          gamesLost: gamesLostTeam1 = 0,
+          gamesDrawn: gamesDrawnTeam1 = 0,
+          gamesPlayed: gamesPlayedTeam1 = 0,
+          goalsScored: goalsScoredTeam1 = 0,
+          goalsConceded: goalsConcededTeam1 = 0,
+          goalDifference: goalDifferenceTeam1 = 0,
         } = acc[team1];
 
         const {
-          gamesDrawn: gamesDrawnTeam2 = 0,
-          gamesLost: gamesLostTeam2 = 0,
-          gamesPlayed: gamesPlayedTeam2 = 0,
-          gamesWon: gamesWonTeam2 = 0,
-          goalDifference: goalDifferenceTeam2 = 0,
-          goalsConceded: goalsConcededTeam2 = 0,
-          goalsScored: goalsScoredTeam2 = 0,
           points: pointsTeam2 = 0,
+          gamesWon: gamesWonTeam2 = 0,
+          gamesLost: gamesLostTeam2 = 0,
+          gamesDrawn: gamesDrawnTeam2 = 0,
+          gamesPlayed: gamesPlayedTeam2 = 0,
+          goalsScored: goalsScoredTeam2 = 0,
+          goalsConceded: goalsConcededTeam2 = 0,
+          goalDifference: goalDifferenceTeam2 = 0,
         } = acc[team2];
 
         if (score !== undefined) {
@@ -86,7 +85,7 @@ function App() {
 
             acc[team2].gamesLost = gamesLostTeam2 + 1;
 
-            acc[team1].points = (acc[team1].points ?? 0) + 3;
+            acc[team1].points = pointsTeam1 + 3;
 
             acc[team1].goalDifference = goalDifferenceTeam1 + goalDifference;
 
@@ -98,7 +97,7 @@ function App() {
 
             acc[team2].gamesWon = gamesWonTeam2 + 1;
 
-            acc[team2].points = (acc[team2].points ?? 0) + 3;
+            acc[team2].points = pointsTeam2 + 3;
 
             acc[team1].goalDifference = goalDifferenceTeam2 + goalDifference;
 
